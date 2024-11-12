@@ -10,7 +10,7 @@ export const UpsertNote = ({ setOpen, note, createNote, updateNote }) => {
   const clearInputs = () => {
     setTitle("");
     setDesc("");
-    if (editorRef.current) editorRef.current.innerHTML = "";
+    if (editorRef.current) editorRef.current.textContent = "";
   };
 
   const handleClear = (event) => {
@@ -20,7 +20,7 @@ export const UpsertNote = ({ setOpen, note, createNote, updateNote }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const content = editorRef.current.innerHTML;
+    const content = editorRef.current.innerText; // Use innerText instead of innerHTML
     setDesc(content);
 
     if (note) {
@@ -50,7 +50,7 @@ export const UpsertNote = ({ setOpen, note, createNote, updateNote }) => {
 
   useEffect(() => {
     if (editorRef.current) {
-      editorRef.current.innerHTML = desc;
+      editorRef.current.textContent = desc; // Set content as plain text
     }
   }, [desc]);
 
@@ -160,7 +160,7 @@ export const UpsertNote = ({ setOpen, note, createNote, updateNote }) => {
             className="rich-text-area"
             contentEditable
             suppressContentEditableWarning={true}
-            onBlur={() => setDesc(editorRef.current.innerHTML)}
+            onBlur={() => setDesc(editorRef.current.innerText)} 
           ></div>
 
           <div className="upsert-actions">
