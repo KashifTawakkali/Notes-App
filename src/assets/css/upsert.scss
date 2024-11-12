@@ -161,6 +161,40 @@
 
 
 
+.highlighted-term {
+  position: relative;
+  color: #007bff;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 1px dotted #007bff;
+}
+
+.highlighted-term:hover::after {
+  content: attr(title);
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+}
+
+.highlighted-term::after {
+  content: "";
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+}
+
+
+
 
 
 

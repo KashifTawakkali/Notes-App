@@ -1,14 +1,15 @@
 import "../assets/css/card.scss";
+import { highlightTerms } from "../utils/highlightTerms";
 
 export const NoteCard = ({ onPreview, onUpdate, onDelete, note }) => {
   return (
     <div className="note-card">
       <div className="note-card-wrapper">
         <h2 className="card-title" onClick={() => onPreview(note)}>
-          {note?.title}
+          <span dangerouslySetInnerHTML={{ __html: highlightTerms(note?.title) }} />
         </h2>
         <div className="card-body">
-          <p>{note?.desc}</p>
+          <p dangerouslySetInnerHTML={{ __html: highlightTerms(note?.desc) }} />
         </div>
         <span className="card-details" onClick={() => onPreview(note)}>
           read more
