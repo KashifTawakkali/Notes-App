@@ -1,19 +1,44 @@
+import React, { useState } from "react";
+import highlightTerms from "../utils/highlightTerms"; 
 import "../assets/css/card.scss";
-import { highlightTerms } from "../utils/highlightTerms";
 
-export const NoteCard = ({ onPreview, onUpdate, onDelete, note }) => {
+// Handle the preview and display logic correctly
+export const NoteCard = ({ onUpdate, onDelete, note }) => {
+  const [tooltipContent, setTooltipContent] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false); // State to toggle full details
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded); // Toggle visibility of full content
+  };
+
   return (
     <div className="note-card">
       <div className="note-card-wrapper">
-        <h2 className="card-title" onClick={() => onPreview(note)}>
-          <span dangerouslySetInnerHTML={{ __html: highlightTerms(note?.title) }} />
+        <h2 className="card-title">
+          {highlightTerms(note?.title, setTooltipContent)}
         </h2>
         <div className="card-body">
-          <p dangerouslySetInnerHTML={{ __html: highlightTerms(note?.desc) }} />
+          {highlightTerms(note?.desc, setTooltipContent)}
         </div>
-        <span className="card-details" onClick={() => onPreview(note)}>
-          read more
+
+        {tooltipContent && (
+          <div className="tooltip show-tooltip">{tooltipContent}</div>
+        )}
+
+        {/* "Read more" button toggles full content */}
+        <span className="card-details" onClick={toggleExpand}>
+          {isExpanded ? "Show less" : "Read more"}
         </span>
+
+        {/* Full note details */}
+        {isExpanded && (
+          <div className="full-details">
+            <p><strong>Title:</strong> {note?.title}</p>
+            <p><strong>Description:</strong> {note?.desc}</p>
+            <p><strong>Created At:</strong> {note?.createdAt}</p>
+          </div>
+        )}
+
         <div className="card-footer">
           <span className="card-timeline">{note?.createdAt}</span>
           <div className="card-actions">
